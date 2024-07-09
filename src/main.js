@@ -1,7 +1,21 @@
-import { createApp } from 'vue'
+import { createApp, provide, h } from 'vue'
+import { DefaultApolloClient } from '@vue/apollo-composable'
+import { ApolloClient, InMemoryCache } from '@apollo/client/core'
 import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
-import store from './store'
 
-createApp(App).use(store).use(router).mount('#app')
+const cache = new InMemoryCache()
+
+const apolloClient = new ApolloClient({
+  cache,
+  uri: 'http://127.0.0.1:3000/graphiql',
+})
+
+const app = createApp({
+  setup () {
+    provide(DefaultApolloClient, apolloClient)
+  },
+
+  render: () => h(App),
+})
+
+app.mount('#app');
