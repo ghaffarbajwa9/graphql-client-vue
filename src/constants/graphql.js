@@ -5,6 +5,9 @@ export const ALL_USERS_QUERY = gql`
       name
       email
       booksCount
+      books {
+      	title
+      }
     }
   }
 `
